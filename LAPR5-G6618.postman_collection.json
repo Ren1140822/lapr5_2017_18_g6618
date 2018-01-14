@@ -1,0 +1,2927 @@
+{
+	"info": {
+		"name": "LAPR5-G6618",
+		"_postman_id": "415e261c-dd2d-da5c-f8f8-c6fec3870c51",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "medicines-management",
+			"item": [
+				{
+					"name": "/api/posologies not authenticated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34d4937c-8061-468b-a673-f839be8fe726",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/posologies not authenticated with state 400\"]=responseCode.code===400;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{medicinesToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlMedicines}}/api/posologies",
+							"host": [
+								"{{urlMedicines}}"
+							],
+							"path": [
+								"api",
+								"posologies"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "medicines management token with electronic prescriptions client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e2aad661-6ec8-4383-8ee0-9a2e62a567a1",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"medicinesToken\", jsonData.access_token);",
+									"",
+									"tests[\"Authenticated to Medicines with state 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"client_id\":\"x2QUE1LixaXfsjsip8TZvWJacg61qcvy\",\n\t\"client_secret\":\"kENcRaE-32TGuSeYfb9sEsDHeDOc2KS_ymJ5Af8Br7smBsk4p6LWaSnQMmaLIlXd\",\n\t\"audience\":\"https://medicines-backend-api/\",\n\t\"grant_type\":\"client_credentials\"\n}"
+						},
+						"url": {
+							"raw": "{{urlAuth0}}/oauth/token",
+							"host": [
+								"{{urlAuth0}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/posologies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "77dcbbb8-3f31-456b-950e-21b95dfc4650",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/medicines with state 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{medicinesToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{medicinesToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlMedicines}}/api/posologies",
+							"host": [
+								"{{urlMedicines}}"
+							],
+							"path": [
+								"api",
+								"posologies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/medicines",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7ba26646-4412-43fc-8cbd-f7f5f21e1fc8",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"drugID\", jsonData[1].drug.id);",
+									"postman.setEnvironmentVariable(\"medicineID\", jsonData[1].id);",
+									"",
+									"tests[\"GET /api/medicines with state 200\"]=responseCode.code===200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{medicinesToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Ativan\",\n\t\"drug\":\"1\"\n}"
+						},
+						"url": {
+							"raw": "{{urlMedicines}}/api/medicines",
+							"host": [
+								"{{urlMedicines}}"
+							],
+							"path": [
+								"api",
+								"medicines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/drugs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d0d883a5-8a87-4dad-9e16-d611756034df",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/drugs with state 200\"]=responseCode.code===200;",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{medicinesToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{medicinesToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"medicines\":[1, 2]\n}"
+						},
+						"url": {
+							"raw": "{{urlMedicines}}/api/drugs",
+							"host": [
+								"{{urlMedicines}}"
+							],
+							"path": [
+								"api",
+								"drugs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/presentations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dea03abb-b2ae-4655-b3c8-5b85b63c6204",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/presentations with state 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{medicinesToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlMedicines}}/api/presentations",
+							"host": [
+								"{{urlMedicines}}"
+							],
+							"path": [
+								"api",
+								"presentations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/presentations/detailed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4bd6367f-9fc5-4cbc-a007-834e42e0fdcf",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/presentations with state 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{medicinesToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlMedicines}}/api/presentations/detailed",
+							"host": [
+								"{{urlMedicines}}"
+							],
+							"path": [
+								"api",
+								"presentations",
+								"detailed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "receipts-management",
+			"item": [
+				{
+					"name": "/api/medicalReceipts Not Authenticated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a06713fb-1947-4087-8df3-274d17803e31",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/medicalReceipts not authenticated with state 401\"]=responseCode.code===401;",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+							},
+							{
+								"key": "client_secret",
+								"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlReceipts}}/api/medicalReceipts",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"medicalReceipts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/authenticate Pharmacist",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9c86f14e-5fdc-459f-aabd-9581fb23f936",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"userToken\", jsonData.token);",
+									"",
+									"tests[\"Pharmacist2 authenticated with status 201\"]=responseCode.code===201;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"pharmacist2\",\n\t\"password\":\"lapr5\"\n}"
+						},
+						"url": {
+							"raw": "{{urlReceipts}}/api/authenticate",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/medicalReceipts Pharmacist no permission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "91fc05ee-cfd9-44d2-9649-ed379b28c41b",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/medicalReceipts Pharmacist hasn´t permissions - with state 401\"]=responseCode.code===401;",
+									"",
+									"var obj='{\"message\": \"Unauthorized User.\"}';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"GET /api/medicalReceipts info response\"]=responseBody.has(data.message);",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+							},
+							{
+								"key": "client_secret",
+								"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlReceipts}}/api/medicalReceipts",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"medicalReceipts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/authenticate Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "007a0aa1-9d85-4d1e-9411-72f307cd4bf5",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"userToken\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"patient1@isep.pt\",\n\t\"password\":\"lapr5\"\n}"
+						},
+						"url": {
+							"raw": "{{urlReceipts}}/api/authenticate",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/medicalReceipts Patient",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "81b75d65-b554-4dd5-be7c-dad5c2559628",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/medicalReceipts Patient with status 200\"]=responseCode.code===200;",
+									"",
+									"var obj='{\"patient\": \"patient1\"}';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"GET /api/medicalReceipts Patient within info.\"]=responseBody.has(data.patient);",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+							},
+							{
+								"key": "client_secret",
+								"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlReceipts}}/api/medicalReceipts",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"medicalReceipts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/authenticate Physician",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "007a0aa1-9d85-4d1e-9411-72f307cd4bf5",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"userToken\", jsonData.token);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"physician2\",\n\t\"password\":\"lapr5\"\n}"
+						},
+						"url": {
+							"raw": "{{urlReceipts}}/api/authenticate",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/medicalReceipts Physician",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e3aa85e9-a649-4586-a5ab-b5a09d02540b",
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"receiptID\", jsonData[0]._id);",
+									"postman.setEnvironmentVariable(\"prescriptionID\", jsonData[0].prescriptions[0]._id);",
+									"postman.setEnvironmentVariable(\"presentationID\", jsonData[0].prescriptions[0].presentation._id);",
+									"postman.setEnvironmentVariable(\"medicineName\", jsonData[0].prescriptions[0].medicine);",
+									"postman.setEnvironmentVariable(\"drugName\", jsonData[0].prescriptions[0].drug);",
+									"",
+									"tests[\"GET /api/medicalReceipts Physician with status 200\"]=responseCode.code===200;",
+									"",
+									"var obj='{\"physician\": \"physician2\"}';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"GET /api/medicalReceipts Physician within info.\"]=responseBody.has(data.physician);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+							},
+							{
+								"key": "client_secret",
+								"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlReceipts}}/api/medicalReceipts",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"medicalReceipts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/medicalReceipts/[id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "94f1333f-691c-4e52-9fc6-2e4f07730c5b",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/medicalReceipts/{id} with status 200\"]=responseCode.code===200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							},
+							{
+								"key": "client_id",
+								"value": "zueqkcAbR5IusJ0MVKvpLysj2VD4aUaQ"
+							},
+							{
+								"key": "client_secret",
+								"value": "ZKJfrwZ5LQ_3_Kv9D48z9YOCXePzIUOjRVoZDD0B9LyTNgvFtnmK0_MlL3vMeQHD"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlReceipts}}/api/medicalReceipts/{{receiptID}}",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"medicalReceipts",
+								"{{receiptID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/medicalReceipts/[id}/prescriptions/{prescId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "62dae4af-8e01-4248-b30b-404211997195",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/medicalReceipts/{id}/prescriptions/{prescId} with status 200\"]=responseCode.code===200;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							},
+							{
+								"key": "client_id",
+								"value": "zueqkcAbR5IusJ0MVKvpLysj2VD4aUaQ"
+							},
+							{
+								"key": "client_secret",
+								"value": "ZKJfrwZ5LQ_3_Kv9D48z9YOCXePzIUOjRVoZDD0B9LyTNgvFtnmK0_MlL3vMeQHD"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlReceipts}}/api/medicalReceipts/{{receiptID}}/prescriptions/{{prescriptionID}}",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"medicalReceipts",
+								"{{receiptID}}",
+								"prescriptions",
+								"{{prescriptionID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/medicalReceipts/[id}/prescriptions/{prescId} copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6fab663a-737a-4cda-8f3b-8bdb661ddbf7",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/medicalReceipts/{id}/prescriptions/{prescId} with status 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							},
+							{
+								"key": "client_id",
+								"value": "zueqkcAbR5IusJ0MVKvpLysj2VD4aUaQ"
+							},
+							{
+								"key": "client_secret",
+								"value": "ZKJfrwZ5LQ_3_Kv9D48z9YOCXePzIUOjRVoZDD0B9LyTNgvFtnmK0_MlL3vMeQHD"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlReceipts}}/api/medicalReceipts/{{receiptID}}/prescriptions/3242323535",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"medicalReceipts",
+								"{{receiptID}}",
+								"prescriptions",
+								"3242323535"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/patients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "78578916-0f67-46b1-974f-20d9ec1e021e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "client_id",
+								"value": "x2QUE1LixaXfsjsip8TZvWJacg61qcvy"
+							},
+							{
+								"key": "client_secret",
+								"value": "kENcRaE-32TGuSeYfb9sEsDHeDOc2KS_ymJ5Af8Br7smBsk4p6LWaSnQMmaLIlXd"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlReceipts}}/api/patients",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"patients"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pharmacy-management",
+			"item": [
+				{
+					"name": "logs",
+					"description": "",
+					"item": [
+						{
+							"name": "/api/authenticate ADMIN copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var data=JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"userToken\", data.token);",
+											"",
+											"tests[\"SUPPLIER - Authenticate PharmaciesManagement with status 201\"]=responseCode.code===201;"
+										],
+										"id": "a7aad394-7374-4e16-9ee1-192cc34836a3",
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "client_id",
+										"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+									},
+									{
+										"key": "client_secret",
+										"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \n\t\"username\": \"admin\",\n\t\"password\": \"lapr5\"\n}"
+								},
+								"url": {
+									"raw": "{{urlReceipts}}api/authenticate",
+									"host": [
+										"{{urlReceipts}}api"
+									],
+									"path": [
+										"authenticate"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "/api/pharmacyLog",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bc08f4b6-7227-4b02-95c9-43ecf95224ee",
+										"type": "text/javascript",
+										"exec": [
+											"var data=JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"logID\", data[0]._id);",
+											"",
+											"var input=new Date(data[0].date).toISOString().substring(0,10);  ",
+											"postman.setEnvironmentVariable(\"logDate\", input);",
+											"",
+											"tests[\"GET /api/pharmacyLog with status 200\"]=responseCode.code===200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{userToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-access-token",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{urlPharmacies}}/api/pharmacyLog",
+									"host": [
+										"{{urlPharmacies}}"
+									],
+									"path": [
+										"api",
+										"pharmacyLog"
+									]
+								},
+								"description": "Get pharmacies registed in the system"
+							},
+							"response": []
+						},
+						{
+							"name": "/api/pharmacyLog/{id}",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9aa130ad-1204-4f55-90fd-d9f22c4eb900",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"GET /api/pharmacyLog/{id} with status 200\"]=responseCode.code===200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{userToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-access-token",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{urlPharmacies}}/api/pharmacyLog/{{logID}}",
+									"host": [
+										"{{urlPharmacies}}"
+									],
+									"path": [
+										"api",
+										"pharmacyLog",
+										"{{logID}}"
+									]
+								},
+								"description": "Get pharmacies registed in the system"
+							},
+							"response": []
+						},
+						{
+							"name": "/api/pharmacyLog/date/{date}",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "69676008-8336-43bd-af6e-6dca1e5b0510",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"GET /api/pharmacyLog/{date} with status 200\"]=responseCode.code===200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{userToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-access-token",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{urlPharmacies}}/api/pharmacyLog/date/{{logDate}}",
+									"host": [
+										"{{urlPharmacies}}"
+									],
+									"path": [
+										"api",
+										"pharmacyLog",
+										"date",
+										"{{logDate}}"
+									]
+								},
+								"description": "Get pharmacies registed in the system"
+							},
+							"response": []
+						},
+						{
+							"name": "/api/pharmacyLog/since/{date}",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "96759ac3-5e85-4efd-b0ac-33b38bc3f7b6",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"GET /api/pharmacyLog/since/{date} with status 200\"]=responseCode.code===200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{userToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-access-token",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{urlPharmacies}}/api/pharmacyLog/since/{{logDate}}",
+									"host": [
+										"{{urlPharmacies}}"
+									],
+									"path": [
+										"api",
+										"pharmacyLog",
+										"since",
+										"{{logDate}}"
+									]
+								},
+								"description": "Get pharmacies registed in the system"
+							},
+							"response": []
+						},
+						{
+							"name": "/api/sale",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "58334158-1034-4d6e-a83e-f5337f6baafb",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"GET /api/sale with status 200\"]=responseCode.code===200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{userToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-access-token",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{urlPharmacies}}/api/sale",
+									"host": [
+										"{{urlPharmacies}}"
+									],
+									"path": [
+										"api",
+										"sale"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "/api/restock",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b2fe4a82-8bc2-4362-990b-29b4f09f485c",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"GET /api/restock with status 200\"]=responseCode.code===200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{userToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-access-token",
+										"value": "",
+										"disabled": true
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{urlPharmacies}}/api/restock",
+									"host": [
+										"{{urlPharmacies}}"
+									],
+									"path": [
+										"api",
+										"restock"
+									]
+								},
+								"description": ""
+							},
+							"response": []
+						},
+						{
+							"name": "/api/medicinePresentation",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e8c8208f-53d0-4511-a7b2-77655772515e",
+										"type": "text/javascript",
+										"exec": [
+											"tests[\"GET /api/medicinePresentation with status 200\"]=responseCode.code===200;"
+										]
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{userToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "client_id",
+										"value": "zueqkcAbR5IusJ0MVKvpLysj2VD4aUaQ"
+									},
+									{
+										"key": "client_secret",
+										"value": "ZKJfrwZ5LQ_3_Kv9D48z9YOCXePzIUOjRVoZDD0B9LyTNgvFtnmK0_MlL3vMeQHD"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{userToken}}"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{urlPharmacies}}api/medicinePresentation",
+									"host": [
+										"{{urlPharmacies}}api"
+									],
+									"path": [
+										"medicinePresentation"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "/api/authenticate SUPPLIER",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a7aad394-7374-4e16-9ee1-192cc34836a3",
+								"type": "text/javascript",
+								"exec": [
+									"var data=JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"userToken\", data.token);",
+									"",
+									"tests[\"SUPPLIER - Authenticate PharmaciesManagement with status 201\"]=responseCode.code===201;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "client_id",
+								"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+							},
+							{
+								"key": "client_secret",
+								"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"username\": \"supplier1\",\n\t\"password\": \"lapr5\"\n}"
+						},
+						"url": {
+							"raw": "{{urlReceipts}}api/authenticate",
+							"host": [
+								"{{urlReceipts}}api"
+							],
+							"path": [
+								"authenticate"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/pharmacy SUPPLIER not allowed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f124f5d8-ff8c-4f9a-a04f-4ef59f8d5d10",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/pharmacy SUPPLIER with status 403\"]=responseCode.code===403;",
+									"",
+									"var obj='{\"Message\": \"Unauthorized User\"}';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"GET /api/pharmacy info response\"]=responseBody.has(data.Message);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy"
+							]
+						},
+						"description": "Get pharmacies registed in the system"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/authenticate ADMIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a7aad394-7374-4e16-9ee1-192cc34836a3",
+								"type": "text/javascript",
+								"exec": [
+									"var data=JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"userToken\", data.token);",
+									"",
+									"tests[\"SUPPLIER - Authenticate PharmaciesManagement with status 201\"]=responseCode.code===201;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "client_id",
+								"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+							},
+							{
+								"key": "client_secret",
+								"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"username\": \"admin\",\n\t\"password\": \"lapr5\"\n}"
+						},
+						"url": {
+							"raw": "{{urlReceipts}}api/authenticate",
+							"host": [
+								"{{urlReceipts}}api"
+							],
+							"path": [
+								"authenticate"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/pharmacy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7a69c25d-1997-45a0-aea6-5623f9bf01c7",
+								"type": "text/javascript",
+								"exec": [
+									"var data=JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"pharmacyID\", data[14]._id);",
+									"postman.setEnvironmentVariable(\"stockID\", data[14].stocks[0]._id);",
+									"",
+									"tests[\"GET /api/pharmacy with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "x-access-token",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy"
+							]
+						},
+						"description": "Get pharmacies registed in the system"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/pharmacy/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b8e1fcee-7ab2-414b-a3c7-cb7231cf5a0d",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/pharmacy/{id} with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy/{{pharmacyID}}",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy",
+								"{{pharmacyID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/pharmacy with invalid latitude",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac4c94d8-9d35-4fe2-98c8-abded5f3b840",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"POST /api/pharmacy with invalid latitude - status 404\"]=responseCode.code===404;",
+									"",
+									"var obj='\"Please insert a valid latitude (between -90 and 90).\"';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"POST /api/pharmacy error latitude response\"]=responseBody.has(data);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "client_id",
+								"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+							},
+							{
+								"key": "client_secret",
+								"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\":\"Farmácia São João\",\r\n\t\"location\":{\r\n\t\t\"latitude\":\"-91\",\r\n\t\t\"longitude\":\"-2\"\r\n\t}\r\n}"
+						},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy"
+							]
+						},
+						"description": "create pharmacy (valid)"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/pharmacy with invalid longitude",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3dd8326c-96de-4f5e-8eed-206d632d8d61",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"POST /api/pharmacy with invalid longitude - status 404\"]=responseCode.code===404;",
+									"",
+									"var obj='\"Please insert a valid longitude (between -180 and 180).\"';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"POST /api/pharmacy error longitude response\"]=responseBody.has(data);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "client_id",
+								"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+							},
+							{
+								"key": "client_secret",
+								"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\":\"Farmácia São João\",\r\n\t\"location\":{\r\n\t\t\"latitude\":\"-90\",\r\n\t\t\"longitude\":\"181\"\r\n\t}\r\n}"
+						},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy"
+							]
+						},
+						"description": "create pharmacy (valid)"
+					},
+					"response": []
+				},
+				{
+					"name": "/api/pharmacy/{id}/stock/{stockId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0286050f-70f3-4cdc-8358-57328b937f92",
+								"type": "text/javascript",
+								"exec": [
+									"var data=JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"stockDrug\", data[0].stocks[0].medicinePresentation.drug);",
+									"postman.setEnvironmentVariable(\"stockMedicine\", data[0].stocks[0].medicinePresentation.medicine);",
+									"",
+									"",
+									"tests[\"GET /api/pharmacy/{id}/stock/{stockId} with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy/{{pharmacyID}}/stock/{{stockID}}",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy",
+								"{{pharmacyID}}",
+								"stock",
+								"{{stockID}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/pharmacy/{id}/sale",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "013c96c5-ba06-4490-904c-14a2db738518",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/pharmacy/{id}/sale with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy/{{pharmacyID}}/sale",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy",
+								"{{pharmacyID}}",
+								"sale"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/pharmacy/{id}/restock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "106aba9f-0aa9-4c36-a5fc-958780cbe989",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/pharmacy/{id}/restock with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/restock",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"restock"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "find drug in pharmacy stock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ba267d5-cb3c-47ba-9ffa-487e2c0fdde5",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/pharmacy/{id}/stock/drug/{drug} with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy/{{pharmacyID}}/stock/drug/{{stockDrug}}",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy",
+								"{{pharmacyID}}",
+								"stock",
+								"drug",
+								"{{stockDrug}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "find drug in pharmacy stock (not exists)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc956ed2-63aa-4271-958a-d245e0532b00",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/pharmacy/{id}/stock/drug/{drug} not exists with status 404\"]=responseCode.code===404;",
+									"",
+									"var obj='\"There aren´t stocks with the drug name entered\"'",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"GET /api/pharmacy/{id}/stock/drug/{drug} not exists info response\"]=responseBody.has(data);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy/{{pharmacyID}}/stock/drug/teeeest",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy",
+								"{{pharmacyID}}",
+								"stock",
+								"drug",
+								"teeeest"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "find medicine in pharmacy stock",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0ba267d5-cb3c-47ba-9ffa-487e2c0fdde5",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/pharmacy/{id}/stock/drug/{drug} with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy/{{pharmacyID}}/stock/medicine/{{stockMedicine}}",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy",
+								"{{pharmacyID}}",
+								"stock",
+								"medicine",
+								"{{stockMedicine}}"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "find drug in pharmacy stock (not exists) copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e2104b3d-a4c5-409d-b484-c09ef280091f",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\"GET /api/pharmacy/{id}/stock/drug/{drug} not exists with status 404\"]=responseCode.code===404;",
+									"",
+									"var obj='\"There aren´t stocks with the medicine name entered\"'",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"GET /api/pharmacy/{id}/stock/drug/{drug} not exists info response\"]=responseBody.has(data);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy/{{pharmacyID}}/stock/medicine/teeeest",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy",
+								"{{pharmacyID}}",
+								"stock",
+								"medicine",
+								"teeeest"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/pharmacy/{id}/stock/{stockId} not from that pharmacy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a82ee11f-6d79-4b36-b233-add61b51023f",
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"tests[\" GET /api/pharmacy/{{pharmacyID}}/stock/5a39674e44a17309201604e4th NOT status 404\"]=responseCode.code===404;",
+									"",
+									"var obj='\"There isn´t stock with the id entered in pharmacy\"'",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"GET /api/pharmacy/{id}/stock/drug/{drug} not exists info response\"]=responseBody.has(data);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlPharmacies}}/api/pharmacy/{{pharmacyID}}/stock/5a39674e44a17309201604e4",
+							"host": [
+								"{{urlPharmacies}}"
+							],
+							"path": [
+								"api",
+								"pharmacy",
+								"{{pharmacyID}}",
+								"stock",
+								"5a39674e44a17309201604e4"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders-management",
+			"item": [
+				{
+					"name": "/api/authenticate Pharmacist copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.environment.set(\"userToken\", jsonData.token);",
+									"",
+									"tests[\"Pharmacist2 authenticated with status 201\"]=responseCode.code===201;"
+								],
+								"id": "9c86f14e-5fdc-459f-aabd-9581fb23f936",
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\":\"pharmacist2\",\n\t\"password\":\"lapr5\"\n}"
+						},
+						"url": {
+							"raw": "{{urlReceipts}}/api/authenticate",
+							"host": [
+								"{{urlReceipts}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/Orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2aa54e06-724b-4edb-9b94-576b60b90952",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/Orders pharmacist cannot access with status 403\"]=responseCode.code===403;",
+									"",
+									"var obj='{\"Message\": \"Unauthorized User\"}';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"GET /api/pharmacy info response\"]=responseBody.has(data.Message);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlOrders}}/api/Orders",
+							"host": [
+								"{{urlOrders}}"
+							],
+							"path": [
+								"api",
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/authenticate SUPPLIER copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data=JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"userToken\", data.token);",
+									"",
+									"tests[\"SUPPLIER - Authenticate PharmaciesManagement with status 201\"]=responseCode.code===201;"
+								],
+								"id": "a7aad394-7374-4e16-9ee1-192cc34836a3",
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "client_id",
+								"value": "JlBREWOiSAE87o0MZjymMkH8z5wPX7QW"
+							},
+							{
+								"key": "client_secret",
+								"value": "xVeQAFK7NeZZXSJ7ZQeA2H6ouILGkGIyxBNKVPo-8W5tzDC-0o_vIwF96veW9V7b"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"username\": \"supplier1\",\n\t\"password\": \"lapr5\"\n}"
+						},
+						"url": {
+							"raw": "{{urlReceipts}}api/authenticate",
+							"host": [
+								"{{urlReceipts}}api"
+							],
+							"path": [
+								"authenticate"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/Orders restriction",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5f03b753-aa08-43b0-9cf3-c50fc3d0b846",
+								"type": "text/javascript",
+								"exec": [
+									"var data=JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"orderID\", data[0]._id);",
+									"",
+									"tests[\"GET /api/Orders supplier with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlOrders}}/api/Orders",
+							"host": [
+								"{{urlOrders}}"
+							],
+							"path": [
+								"api",
+								"Orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/Orders/{id}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fdeb6a3d-fdc3-41c3-bbe5-0dabf5c18eda",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/Orders/{id} supplier with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlOrders}}/api/Orders/{{orderID}}",
+							"host": [
+								"{{urlOrders}}"
+							],
+							"path": [
+								"api",
+								"Orders",
+								"{{orderID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/Orders/{id} not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cf25d7fd-0d32-4484-89a6-6d8491ba207c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/Orders/{id}not found with status 404\"]=responseCode.code===404;"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlOrders}}/api/Orders/3345345",
+							"host": [
+								"{{urlOrders}}"
+							],
+							"path": [
+								"api",
+								"Orders",
+								"3345345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/DeliveryPlans more than 1 pharmacy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3edac5d0-5201-45d1-b3e3-bfe4107e09ba",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/DeliveryPlans with status 200\"]=responseCode.code===200;",
+									"",
+									"var data=JSON.parse(responseBody);",
+									"",
+									"var size=data.VisitedPharmacies.length;",
+									"",
+									"tests[\"GET /api/deliveryPlan more than 1 pharmacy\"]=(size>1);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"VisitedPharmacies\":[\"5a5225c66e4006e46dea3c98\", \"5a5225c66e4006e46dea3c99\"],\n\t\"OrderedWaypoints\":[\"5a5225c66e4006e46dea3c95\", \"5a5225c66e4006e46dea3c96\"],\n\t\"NonVisitedPharmacies\":[\"5a5225c66e4006e46dea3c9a\"]\n}"
+						},
+						"url": {
+							"raw": "{{urlOrders}}/api/DeliveryPlans",
+							"host": [
+								"{{urlOrders}}"
+							],
+							"path": [
+								"api",
+								"DeliveryPlans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/DeliveryPlans/detailed",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4caae3e6-581c-42d9-9b44-b29a4db9524e",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/DeliveryPlans with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{userToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"VisitedPharmacies\":[\"5a5225c66e4006e46dea3c98\", \"5a5225c66e4006e46dea3c99\"],\n\t\"OrderedWaypoints\":[\"5a5225c66e4006e46dea3c95\", \"5a5225c66e4006e46dea3c96\"],\n\t\"NonVisitedPharmacies\":[\"5a5225c66e4006e46dea3c9a\"]\n}"
+						},
+						"url": {
+							"raw": "{{urlOrders}}/api/DeliveryPlans/detailed",
+							"host": [
+								"{{urlOrders}}"
+							],
+							"path": [
+								"api",
+								"DeliveryPlans",
+								"detailed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "travels-management",
+			"item": [
+				{
+					"name": "/calculatePlan same pharmacy 1st and last",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f23c01cb-bc56-44d8-9c6d-d603e382313c",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"POST /api/calculatePlan with status 200\"]=responseCode.code===200;",
+									"",
+									"var data=JSON.parse(responseBody);",
+									"",
+									"var startPharmacy=data.VisitedPharmacies[0].name;",
+									"var size=data.VisitedPharmacies.length;",
+									"var endPharmacy=data.VisitedPharmacies[size-1].name;",
+									"",
+									"tests[\"POST api/calculatePlan Return to the start pharmacy\"]=(startPharmacy===endPharmacy);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"algorithm\":\"gatw\",\n\t\"departure\":\n\t\t{\n\t\t\"name\":\"Warehouse\",\n\t\t\"latitude\":41.2343045,\n\t\t\"longitude\":-8.6200599,\n\t\t\"time\":\"480\"\n\t\t},\n\t\"pharmacies\":\n\t[\n\t\t{\n\t\t\t\"name\":\"pharmacy_good_health\",\n\t\t\t\"latitude\":41.2040539,\n\t\t\t\"longitude\":-8.6482001,\n\t\t\t\"time\":\"1000\"\n\t\t},\n\t\t{\n\t\t\t\"name\":\"pharmacy_fresh_medicine\",\n\t\t\t\"latitude\":41.2208412,\n\t\t\t\"longitude\":-8.6270177,\n\t\t\t\"time\":\"860\"\n\t\t\t\n\t\t},\n\t\t{\n\t\t\t\"name\":\"pharmacy_green_rock\",\n\t\t\t\"latitude\":41.1984097,\n\t\t\t\"longitude\":-8.6814919,\n\t\t\t\"time\":\"1200\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{urlTravels}}calculatePlan",
+							"host": [
+								"{{urlTravels}}calculatePlan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/calculatePlan non visited",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35ba2442-c809-4fd0-96d8-e6c85c3805fa",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"POST /api/calculatePlan extended with status 200\"]=responseCode.code===200;",
+									"",
+									"var output=JSON.parse(responseBody);",
+									"var obj= '{\"name\": \"pharmacy_fresh_medicine\"}';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"POST /api/calculatePlan extended - NonVisited included\"]=(output.NonVisitedPharmacies[0].name==data.name);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"algorithm\":\"gatw\",\n\t\"departure\":\n\t\t{\n\t\t\"name\":\"Warehouse\",\n\t\t\"latitude\":41.2343045,\n\t\t\"longitude\":-8.6200599,\n\t\t\"time\":\"480\"\n\t\t},\n\t\"pharmacies\":\n\t[\n\t\t{\n\t\t\t\"name\":\"pharmacy_good_health\",\n\t\t\t\"latitude\":41.2040539,\n\t\t\t\"longitude\":-8.6482001,\n\t\t\t\"time\":\"1000\"\n\t\t},\n\t\t{\n\t\t\t\"name\":\"pharmacy_fresh_medicine\",\n\t\t\t\"latitude\":41.2208412,\n\t\t\t\"longitude\":-8.6270177,\n\t\t\t\"time\":\"60\"\n\t\t\t\n\t\t},\n\t\t{\n\t\t\t\"name\":\"pharmacy_green_rock\",\n\t\t\t\"latitude\":41.1984097,\n\t\t\t\"longitude\":-8.6814919,\n\t\t\t\"time\":\"1200\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{urlTravels}}calculatePlan",
+							"host": [
+								"{{urlTravels}}calculatePlan"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/calculatePlan min 2 pharmacies",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "888e443b-b066-4080-869b-1836d4267bbc",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"POST /api/calculatePlan min 2 pharmacies with status 400\"]=responseCode.code===400;",
+									"",
+									"var output=JSON.parse(responseBody);",
+									"var obj= '{\"Message\": \"Must have at least two pharmacies.\"}';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"POST /api/calculatePlan min 2 pharmacies info\"]=(output.Message==data.Message);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"algorithm\":\"gatw\",\n\t\"departure\":\n\t{\n\t\"name\":\"Warehouse\",\n\t\"latitude\":41.2343045,\n\t\"longitude\":-8.6200599,\n\t\"time\":\"480\"\n\t},\n\t\"pharmacies\":\n\t[\n\t\t{\n\t\t\t\"name\":\"pharmacy_good_health\",\n\t\t\t\"latitude\":41.2040539,\n\t\t\t\"longitude\":-8.6482001,\n\t\t\t\"time\":\"1000\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{urlTravels}}calculatePlan",
+							"host": [
+								"{{urlTravels}}calculatePlan"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/calculatePlan more than 15 waypoints",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "45865a2b-3ee1-40f2-9b42-2032f4b7a737",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"POST /api/calculatePlan more than 15 waypoints with status 200\"]=responseCode.code===200;",
+									"",
+									"var data=JSON.parse(responseBody);",
+									"",
+									"var size=data.OrderedWaypoints.length;",
+									"",
+									"tests[\"POST api/calculatePlan more than 15 waypoints\"]=(size>15);"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"algorithm\":\"gatw\",\n\t\"departure\":\n\t\t{\n\t\t\"name\":\"Warehouse\",\n\t\t\"latitude\":41.2343045,\n\t\t\"longitude\":-8.6200599,\n\t\t\"time\":\"480\"\n\t\t},\n\t\"pharmacies\":\n\t[\n\t\t{\n\t\t\t\"name\":\"pharmacy_good_health\",\n\t\t\t\"latitude\":41.2040539,\n\t\t\t\"longitude\":-8.6482001,\n\t\t\t\"time\":\"1000\"\n\t\t},\n\t\t{\n\t\t\t\"name\":\"pharmacy_fresh_medicine\",\n\t\t\t\"latitude\":41.2208412,\n\t\t\t\"longitude\":-8.6270177,\n\t\t\t\"time\":\"60\"\n\t\t\t\n\t\t},\n\t\t{\n\t\t\t\"name\":\"pharmacy_green_rock\",\n\t\t\t\"latitude\":41.1984097,\n\t\t\t\"longitude\":-8.6814919,\n\t\t\t\"time\":\"1200\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{urlTravels}}calculatePlan",
+							"host": [
+								"{{urlTravels}}calculatePlan"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/calculatePlan non visited copy copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"POST /api/calculatePlan extended with status 200\"]=responseCode.code===200;",
+									"",
+									"var output=JSON.parse(responseBody);",
+									"var obj= '{\"name\": \"pharmacy_fresh_medicine\"}';",
+									"var data=JSON.parse(obj);",
+									"",
+									"tests[\"POST /api/calculatePlan extended - NonVisited included\"]=(output.NonVisitedPharmacies[0].name==data.name);"
+								],
+								"id": "35ba2442-c809-4fd0-96d8-e6c85c3805fa",
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"algorithm\":\"gatw\",\n\t\"departure\":\n\t\t{\n\t\t\"name\":\"Warehouse\",\n\t\t\"latitude\":41.2343045,\n\t\t\"longitude\":-8.6200599,\n\t\t\"time\":\"480\"\n\t\t},\n\t\"pharmacies\":\n\t[\n\t\t{\n\t\t\t\"name\":\"pharmacy_good_health\",\n\t\t\t\"latitude\":41.2040539,\n\t\t\t\"longitude\":-8.6482001,\n\t\t\t\"time\":\"1000\"\n\t\t},\n\t\t{\n\t\t\t\"name\":\"pharmacy_fresh_medicine\",\n\t\t\t\"latitude\":41.2208412,\n\t\t\t\"longitude\":-8.6270177,\n\t\t\t\"time\":\"60\"\n\t\t\t\n\t\t},\n\t\t{\n\t\t\t\"name\":\"pharmacy_green_rock\",\n\t\t\t\"latitude\":41.1984097,\n\t\t\t\"longitude\":-8.6814919,\n\t\t\t\"time\":\"1200\"\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{urlTravels}}calculatePlan",
+							"host": [
+								"{{urlTravels}}calculatePlan"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth0",
+			"item": [
+				{
+					"name": "/oauth/token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4ae1ef02-888d-4c12-83c0-763fbb98608a",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"POST /oauth/token with status 200\"]=responseCode.code===200;",
+									"",
+									"tests[\"POST /oath/token response with access_token\"]=(responseBody.has(\"access_token\"));",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"grant_type\": \"client_credentials\",\r\n    \"client_id\": \"3irkP1QzHWEfBsIrrk32IWPhWx9u9Lxx\",\r\n    \"client_secret\": \"IICN_w4LUkvcDTgIbQ6WVh88bmxVmdOZbuTEWj4ScX84N_Ux0dOthohwtYwsvp3z\",\r\n    \"audience\": \"https://lapr5-3da.eu.auth0.com/api/v2/\"\r\n}"
+						},
+						"url": {
+							"raw": "{{urlAuth0}}/oauth/token",
+							"host": [
+								"{{urlAuth0}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v2/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f0f40693-4446-4200-935b-e9b3430ee80e",
+								"type": "text/javascript",
+								"exec": [
+									"tests[\"GET /api/v2/users with status 200\"]=responseCode.code===200;"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlAuth0}}/api/v2/users",
+							"host": [
+								"{{urlAuth0}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v2/users/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{urlAuth0}}/api/v2/users/auth0|5a54b5c9f7763919b0c448c0",
+							"host": [
+								"{{urlAuth0}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"users",
+								"auth0|5a54b5c9f7763919b0c448c0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/v2/users/{id}",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{medicinesToken}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"app_metadata\": {\n\t\t\"lastConsolidation\": \"2013-01-05T15:30:36.592Z\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{urlAuth0}}/api/v2/users/auth0|5a551fb7a632d9312d31037f",
+							"host": [
+								"{{urlAuth0}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"users",
+								"auth0|5a551fb7a632d9312d31037f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"exec": [
+					""
+				],
+				"id": "ab65a1a1-a4a2-4771-a452-2391fb5be5cd",
+				"type": "text/javascript"
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"exec": [
+					""
+				],
+				"id": "6e41c708-2681-4efe-87db-daf8a4c1df86",
+				"type": "text/javascript"
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fd5dc8d6-b742-49d2-bbc9-5c41047e018d",
+			"key": "urlMedicinesManagement",
+			"value": "https://lapr5-g6618-medicines-management.azurewebsites.net/",
+			"type": "text"
+		},
+		{
+			"id": "349fdd5f-21f8-4534-8972-ad105a17ac20",
+			"key": "urlReceiptsManagement",
+			"value": "https://lapr5-g6618-receipts-management.azurewebsites.net/",
+			"type": "text"
+		},
+		{
+			"id": "74ffeaea-7565-4569-a031-1f4465245954",
+			"key": "urlPharmacyManagement",
+			"value": "https://lapr5-g6618-pharmacy-management.azurewebsites.net/",
+			"type": "text"
+		},
+		{
+			"id": "a6329dd7-c4d4-4951-a872-e61e82f0ad53",
+			"key": "urlOrdersManagement",
+			"value": "https://lapr5-g6618-orders-management.azurewebsites.net",
+			"type": "text"
+		},
+		{
+			"id": "df83ee53-60cc-4299-85d8-777c939f0424",
+			"key": "urlTravelsManagement",
+			"value": "ec2-54-213-7-246.us-west-2.compute.amazonaws.com:3000",
+			"type": "text"
+		},
+		{
+			"id": "930cca35-2927-42ac-b5f2-513a9351b5f8",
+			"key": "urlElectronicPrescription",
+			"value": "https://lapr5-g6618-electronic-prescriptions.azurewebsites.net",
+			"type": "text"
+		},
+		{
+			"id": "2a9099c0-ead2-4da9-b609-d3cb408ca986",
+			"key": "urlAuth0",
+			"value": "https://lapr5-3da.eu.auth0.com",
+			"type": "text"
+		}
+	]
+}
